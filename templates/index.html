@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('add_todo') }}" method="POST" class="add-todo-form">
+            <input type="text" name="title" placeholder="Add a new todo..." required>
+            <button type="submit">Add</button>
+        </form>
+
+        <ul class="todo-list">
+            {% for todo in todos %}
+                <li class="todo-item {% if todo.completed %}completed{% endif %}">
+                    <span class="todo-title">{{ todo.title }}</span>
+                    <div class="todo-actions">
+                        <a href="{{ url_for('toggle_todo', todo_id=todo.id) }}" class="toggle-btn">
+                            {% if todo.completed %}Undo{% else %}Complete{% endif %}
+                        </a>
+                        <a href="{{ url_for('delete_todo', todo_id=todo.id) }}" class="delete-btn">Delete</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="no-todos">No todos yet. Add one above!</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html> 

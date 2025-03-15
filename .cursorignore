@@ -1,0 +1,10 @@
+# Files to exclude from Cursor AI indexing only
+# These files will still be tracked in git
+# Add specific patterns for files you don't want Cursor to read/interpret
+
+# Example patterns:
+# docs/internal/*.md
+# notes/*.md
+# temp/*.md
+# *-private.md
+# *-internal.md 
